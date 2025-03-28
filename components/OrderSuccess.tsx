@@ -23,6 +23,7 @@ export default function OrderSuccess() {
   const router = useRouter();
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [tableNumber, setTableNumber] = useState<string | null>(null);
+  const [showIframe, setShowIframe] = useState(false);
 
   useEffect(() => {
     const details = sessionStorage.getItem('orderDetails');
@@ -40,6 +41,10 @@ export default function OrderSuccess() {
     if (tableNumber) {
       router.push(`/?tableNumber=${tableNumber}`);
     }
+  };
+
+  const handlePlayAndWin = () => {
+    setShowIframe(true);
   };
 
   return (
@@ -90,6 +95,24 @@ export default function OrderSuccess() {
           <Button onClick={handleReorder} className="w-full">
             Place Another Order
           </Button>
+
+          {/* Play & win coupons button */}
+          <Button onClick={handlePlayAndWin} className="w-full mt-4">
+            Play & Win Coupons
+          </Button>
+
+          {/* Show the iframe if the button is clicked */}
+          {showIframe && (
+            <div className="mt-8">
+              <iframe 
+                src="https://game-tabulator.vercel.app/" 
+                width="100%" 
+                height="500" 
+                style={{ border: 'none' }} 
+                title="Game Tabulator"
+              />
+            </div>
+          )}
         </motion.div>
       </div>
     </div>
